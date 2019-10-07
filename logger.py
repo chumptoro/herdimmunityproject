@@ -23,7 +23,7 @@ class Logger(object):
         f = open(self.file_name, "w")
 
         # Create row of data
-        row_data = " "
+        row_data = ""
         row_data = pop_size + "\n"
         row_data += vacc_percentage + "\n"
         row_data += virus_name + "\n"
@@ -49,7 +49,7 @@ class Logger(object):
         or the other edge cases:
             "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'} \n"
         '''
-        log = " "
+        log = ""
         if random_person_sick:
             log += (f" {person.ID} didn't infect {random_person.ID} because {already sick}\n")
         elif random_person_vacc:
@@ -63,6 +63,10 @@ class Logger(object):
         # represent all the possible edge cases. Use the values passed along with each person,
         # along with whether they are sick or vaccinated when they interact to determine
         # exactly what happened in the interaction and create a String, and write to your logfile.
+
+        f = open(log.txt, "a")
+        f.write(log)
+        f.close()
         pass
 
     def log_infection_survival(self, person, did_die_from_infection):
@@ -72,9 +76,18 @@ class Logger(object):
         The format of the log should be:
             "{person.ID} died from infection\n" or "{person.ID} survived infection.\n"
         '''
-        # TODO: Finish this method. If the person survives, did_die_from_infection
+        # If the person survives, did_die_from_infection
         # should be False.  Otherwise, did_die_from_infection should be True.
+        log = ""
+        if did_die_from_infection is True:
+            log += (f"{person.ID} died from infection \n")
+        else:
+            log += (f"{person.ID} survived infection \n")
+
         # Append the results of the infection to the logfile
+        f = open(log.txt, "a")
+        f.write(log)
+        f.close()
         pass
 
     def log_time_step(self, time_step_number):
