@@ -20,6 +20,19 @@ class Logger(object):
         # TODO: Finish this method. This line of metadata should be tab-delimited
         # it should create the text file that we will store all logs in.
         # TIP: Use 'w' mode when you open the file. For all other methods, use
+        f = open(self.file_name, "w")
+
+        # Create row of data
+        row_data = " "
+        row_data = pop_size + "\n"
+        row_data += vacc_percentage + "\n"
+        row_data += virus_name + "\n"
+        row_data += mortality_rate + "\n"
+        row_data += basic_repro_num + "\n"
+
+        # row of data to metadata
+        f.write(row_data)
+        f.close()
         # the 'a' mode to append a new log to the end, since 'w' overwrites the file.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
