@@ -49,6 +49,16 @@ class Logger(object):
         or the other edge cases:
             "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'} \n"
         '''
+        # instantiate log
+        if  random_person_sick:
+            {person.ID} didn't infect {random_person.ID} because {already sick } \n
+        elif random_person_vacc:
+            {person.ID} didn't infect {random_person.ID} because {vaccinated} \n
+        elif did_infect == True:
+            {person.ID} infects {random_person.ID} \n
+        else:
+            print("Didn't Infect")
+
         # TODO: Finish this method. Think about how the booleans passed (or not passed)
         # represent all the possible edge cases. Use the values passed along with each person,
         # along with whether they are sick or vaccinated when they interact to determine
