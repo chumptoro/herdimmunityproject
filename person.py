@@ -16,7 +16,7 @@ class Person(object):
         '''
         self._id = None  # int
         self.is_alive = True  # boolean
-        self.is_vaccinated = None  # boolean
+        self.is_vaccinated = is_vaccinated
         self.infection = None  # Virus object or None
 
     def did_survive_infection(self):
@@ -30,7 +30,28 @@ class Person(object):
         if random.randint(1, 100) < self.infection.mortality_rate:
             return False
         else:
+            self.infection = False
             return True
+
+    def vaccinate(self):
+        self.is_vaccinated = True
+
+    # def interact(self, person):
+    #     '''the outcome of a sick person interacting with a healthy person:
+    #     true if infection is spread
+    #     false if the healthy person is not infected
+    #     '''
+    #     if person.is_vaccinated:
+    #         return False
+    #     else:
+
+
+class Interaction(object):
+    '''documents the outcome of each interaction 
+    between a sick person and 100 healthy people'''
+
+    def __init__(self, infected_person, population):
+        self.infected_person = infecte
 
 
 ''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
