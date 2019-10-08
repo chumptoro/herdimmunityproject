@@ -4,7 +4,7 @@ from virus import Virus
 
 
 class Person(object):
-    ''' Person objects will populate the simulation. '''
+    ''' Person objects is the basic unit of being that will populate the simulation. '''
 
     def __init__(self, _id, is_vaccinated, infection=None):
         ''' We start out with is_alive = True, because we don't make vampires or zombies.
