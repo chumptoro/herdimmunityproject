@@ -1,4 +1,5 @@
-import random, sys
+import random
+import sys
 random.seed(42)
 from person import Person
 from logger import Logger
@@ -13,6 +14,8 @@ class Simulation(object):
     population that are vaccinated, the size of the population, and the amount of initially
     infected people in a population are all variables that can be set when the program is run.
     '''
+
+    # <- these are all command lines
     def __init__(self, pop_size, vacc_percentage, initial_infected=1, virus):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
@@ -37,15 +40,15 @@ class Simulation(object):
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
         self.logger = None
-        self.population = [] # List of Person objects
-        self.pop_size = pop_size # Int
-        self.next_person_id = 0 # Int
-        self.virus = virus # Virus object
-        self.initial_infected = initial_infected # Int
-        self.total_infected = 0 # Int
-        self.current_infected = 0 # Int
-        self.vacc_percentage = vacc_percentage # float between 0 and 1
-        self.total_dead = 0 # Int
+        self.population = []  # List of Person objects
+        self.pop_size = pop_size  # Int
+        self.next_person_id = 0  # Int
+        self.virus = virus  # Virus object
+        self.initial_infected = initial_infected  # Int
+        self.total_infected = 0  # Int
+        self.current_infected = 0  # Int
+        self.vacc_percentage = vacc_percentage  # float between 0 and 1
+        self.total_dead = 0  # Int
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
@@ -60,7 +63,7 @@ class Simulation(object):
                 list: A list of Person objects.
 
         '''
-        # TODO: Finish this method!  This method should be called when the simulation
+        # TODO: Finish this method! This method should be called when the simulation
         # begins, to create the population that will be used. This method should return
         # an array filled with Person objects that matches the specifications of the
         # simulation (correct number of people in the population, correct percentage of
@@ -68,7 +71,26 @@ class Simulation(object):
 
         # Use the attributes created in the init method to create a population that has
         # the correct intial vaccination percentage and initial infected.
-        pass
+
+        remain_pop = self.pop_size
+
+        vaccinated_pop = self.pop_size * self.vacc_percentage
+        for person in range(vaccinated_pop):
+            id = self.next_person_id + 1
+            person = person.Person(id, True, False)
+            self.population.append(person)
+
+        infected_pop = self.pop_size * self.initial_infected
+        for person in range(infected_pop):
+            id = self.next_person_id + 1
+            person = person.Person(id, False, True)
+            self.population.append(person)
+
+        remain_pop = remain_pop - vaccinated_pop - infected_pop
+        for person in range(remain_pop):
+            id = self.next_person_id + 1
+            person = person.Person(id, False, True)
+            self.population.append(person)
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
@@ -95,9 +117,10 @@ class Simulation(object):
         should_continue = None
 
         while should_continue:
-        # TODO: for every iteration of this loop, call self.time_step() to compute another
-        # round of this simulation.
-        print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+            # TODO: for every iteration of this loop, call self.time_step() to compute another
+            # round of this simulation.
+        print('The simulation has ended after {time_step_counter} turns.'.format(
+            time_step_counter))
         pass
 
     def time_step(self):
@@ -130,15 +153,15 @@ class Simulation(object):
 
         # TODO: Finish this method.
         #  The possible cases you'll need to cover are listed below:
-            # random_person is vaccinated:
-            #     nothing happens to random person.
-            # random_person is already infected:
-            #     nothing happens to random person.
-            # random_person is healthy, but unvaccinated:
-            #     generate a random number between 0 and 1.  If that number is smaller
-            #     than repro_rate, random_person's ID should be appended to
-            #     Simulation object's newly_infected array, so that their .infected
-            #     attribute can be changed to True at the end of the time step.
+        # random_person is vaccinated:
+        #     nothing happens to random person.
+        # random_person is already infected:
+        #     nothing happens to random person.
+        # random_person is healthy, but unvaccinated:
+        #     generate a random number between 0 and 1.  If that number is smaller
+        #     than repro_rate, random_person's ID should be appended to
+        #     Simulation object's newly_infected array, so that their .infected
+        #     attribute can be changed to True at the end of the time step.
         # TODO: Call slogger method during this method.
         pass
 
