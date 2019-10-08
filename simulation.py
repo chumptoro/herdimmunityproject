@@ -103,8 +103,6 @@ class Simulation(object):
             return False
         else:
             return True
-        # TODO: Complete this helper method.  Returns a Boolean.
-        pass
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
