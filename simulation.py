@@ -49,6 +49,7 @@ class Simulation(object):
         self.current_infected = 0  # Int
         self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
+        self.total_vaccinated = 0
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
@@ -73,19 +74,19 @@ class Simulation(object):
         # the correct intial vaccination percentage and initial infected.
 
         remain_pop = self.pop_size
-
+        # vaccinated population
         vaccinated_pop = self.pop_size * self.vacc_percentage
         for person in range(vaccinated_pop):
             id = self.next_person_id + 1
             person = person.Person(id, True, False)
             self.population.append(person)
-
+        # infected population
         infected_pop = self.pop_size * self.initial_infected
         for person in range(infected_pop):
             id = self.next_person_id + 1
             person = person.Person(id, False, True)
             self.population.append(person)
-
+        # healthy but unvaccinated population
         remain_pop = remain_pop - vaccinated_pop - infected_pop
         for person in range(remain_pop):
             id = self.next_person_id + 1
@@ -96,10 +97,12 @@ class Simulation(object):
         ''' The simulation should only end if the entire population is dead
         or everyone is vaccinated.
 
-            Returns:
-                bool: True for simulation should continue, False if it should end.
         '''
         if self.current_infected == 0:
+            return False
+        if self.pop_size == self.total_dead:
+            return False
+        if self.total_vaccinated == self.pop_size:
             return False
         else:
             return True
