@@ -79,9 +79,9 @@ class Logger(object):
         # should be False.  Otherwise, did_die_from_infection should be True.
         log = ""
         if did_die_from_infection is True:
-            log += (f"{person.ID} died from infection \n")
+            log += (f"{person._id} died from infection \n")
         else:
-            log += (f"{person.ID} survived infection \n")
+            log += (f"{person._id} survived infection \n")
 
         # Append the results of the infection to the logfile
         f = open(self.file_name, "a")
