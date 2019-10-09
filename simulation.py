@@ -39,6 +39,7 @@ class Simulation(object):
         # TODO: Store each newly infected person's ID in newly_infected attribute.
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
+
         self.logger = None
         self.population = []  # List of Person objects
         self.pop_size = pop_size  # Int
@@ -156,10 +157,6 @@ class Simulation(object):
         assert person.is_alive == True
         assert random_person.is_alive == True
 
-        # TODO: Finish this method.
-        #  The possible cases you'll need to cover are listed below:
-        # random_person is vaccinated:
-        #     nothing happens to random person.
         # random_person is already infected:
         #     nothing happens to random person.
         # random_person is healthy, but unvaccinated:
@@ -167,8 +164,15 @@ class Simulation(object):
         #     than repro_rate, random_person's ID should be appended to
         #     Simulation object's newly_infected array, so that their .infected
         #     attribute can be changed to True at the end of the time step.
-        # TODO: Call slogger method during this method.
-        pass
+
+        if random_person.is_vaccinated == False and random_person.is_infected == None:
+            prob = random.random()
+            if prob > self.infected_person.infection.repro_rate:
+                return
+            else:
+                self.newly_infected.append(random_person._id)
+
+         # TODO: Call slogger method during this method.
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
