@@ -81,18 +81,35 @@ class Simulation(object):
             id = self.next_person_id + 1
             person = person.Person(id, True, False)
             self.population.append(person)
-        # infected population
-        infected_pop = self.pop_size * self.initial_infected
-        for person in range(infected_pop):
-            id = self.next_person_id + 1
-            person = person.Person(id, False, True)
-            self.population.append(person)
+        # # infected population
+        # infected_pop = self.pop_size * self.initial_infected
+        # for person in range(infected_pop):
+        #     id = self.next_person_id + 1
+        #     person = person.Person(id, False, True)
+        #     self.population.append(person)
         # healthy but unvaccinated population
-        remain_pop = remain_pop - vaccinated_pop - infected_pop
+        #    - infected_pop
+
+        # issue infected population makes everyone infected
+        remain_pop = remain_pop - vaccinated_pop
         for person in range(remain_pop):
             id = self.next_person_id + 1
             person = person.Person(id, False, True)
             self.population.append(person)
+
+        total_to_infect = self.initial_infected
+        while total_to_infect != 0:
+            person_got = random.choice(self.population)
+            if person_got.is_vaccinated == False and person_got.infection == None:
+                person_got.infection = self.virus
+                total_to_infect -= 1
+
+
+        # randomly select a person from population
+        # check to see if they are not vaccineated
+        # set the amount infected
+        # do it as many times as initial infected
+        # check if they are not already infected
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
