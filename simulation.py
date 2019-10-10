@@ -158,6 +158,16 @@ class Simulation(object):
             3. Otherwise call simulation.interaction(person, random_person) and
                 increment interaction counter by 1.
             '''
+        interactions = 0
+        for person in range(self.population):
+            if person.infection == self.virus:
+
+                while ineteraction <= 100:
+                    if person.is_alive:
+                        random_person = random.choice(self.population)
+                        self.interaction(person, random_person)
+                        interactions += 1
+
         # TODO: Finish this method.
         pass
 
