@@ -24,11 +24,11 @@ class Logger(object):
 
         # Create row of data
         row_data = ""
-        row_data = pop_size + "\t"
-        row_data += vacc_percentage + "\t"
-        row_data += virus_name + "\t"
-        row_data += mortality_rate + "\t"
-        row_data += basic_repro_num + "\t"
+        row_data = f"{pop_size} \t"
+        row_data += f"{vacc_percentage} \t"
+        row_data += f"{virus_name}  \t"
+        row_data += f"{mortality_rate}  \t"
+        row_data += f"{basic_repro_num}  \t"
 
         # row of data to metadata
         f.write(row_data)

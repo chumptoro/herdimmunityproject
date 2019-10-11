@@ -16,7 +16,7 @@ class Simulation(object):
     '''
 
     # <- these are all command lines
-    def __init__(self, pop_size, vacc_percentage, initial_infected=1, virus):
+    def __init__(self, pop_size, vacc_percentage, virus, initial_infected=1):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
         The next_person_id is the next available id for all created Persons,
@@ -40,7 +40,7 @@ class Simulation(object):
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
 
-        self.logger = None
+        self.logger = Logger('log.txt')
         self.population = []  # List of Person objects
         self.pop_size = pop_size  # Int
         self.next_person_id = 0  # Int
@@ -52,8 +52,11 @@ class Simulation(object):
         self.total_dead = 0  # Int
         self.total_vaccinated = 0
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-            virus_name, population_size, vacc_percentage, initial_infected)
+            virus_name, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
+
+        self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name,
+        self.virus.mortality_rate, self.virus.repro_rate)
 
     def _create_population(self, initial_infected):
         '''This method will create the initial population.
@@ -129,7 +132,7 @@ class Simulation(object):
         the simulation are met.
         '''
         Logger.write_metadata(self, self.pop_size, self.vacc_percentage,
-                              self.virus_name, self.mort_rate, self.repo_rate)
+                              self.virus.name, self.virus.mortality_rate, self.virus.repro_rate)
         should_continue = self._simulation_should_continue()
         # TODO: Finish this method.  To simplify the logic here, use the helper method
         # _simulation_should_continugie() to tell us whether or not we should continue
@@ -139,14 +142,14 @@ class Simulation(object):
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
         time_step_counter = 0
-        should_continue = None
+        should_continue = True
 
         while should_continue:
             self.time_step()
-            self.logger.log_continue(3)
-            self.time_step_counter += 1
+            # self.logger.log_continue(3)
+            time_step_counter += 1
             should_continue = self._simulation_should_continue()
-        print(f'The simulation has ended after {self.time_step_counter} turns.')
+        print(f'The simulation has ended after {time_step_counter} turns.')
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
         pass
@@ -164,7 +167,7 @@ class Simulation(object):
                 increment interaction counter by 1.
             '''
 
-        for person in range(self.population):
+        for person in self.population:
             if person.infection == self.virus and person.is_alive == True:
                 interactions = 0
                 while interactions < 100:
@@ -218,7 +221,7 @@ class Simulation(object):
 if __name__ == "__main__":
     params = sys.argv[1:]
     virus_name = str(params[0])
-    repro_num = float(params[1])
+    repro_rate = float(params[1])
     mortality_rate = float(params[2])
 
     pop_size = int(params[3])
@@ -229,7 +232,7 @@ if __name__ == "__main__":
     else:
         initial_infected = 1
 
-    virus = Virus(name, repro_rate, mortality_rate)
-    sim = Simulation(pop_size, vacc_percentage, initial_infected, virus)
+    virus = Virus(virus_name, repro_rate, mortality_rate)
+    sim = Simulation(pop_size, vacc_percentage, virus, initial_infected)
 
     sim.run()
