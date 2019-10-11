@@ -58,7 +58,7 @@ class Simulation(object):
         self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name,
         self.virus.mortality_rate, self.virus.repro_rate)
 
-    def _create_population(self, initial_infected):
+    def _create_population(self):
         '''This method will create the initial population.
             Args:
                 initial_infected (int): The number of infected people that the simulation
@@ -80,9 +80,9 @@ class Simulation(object):
         remain_pop = self.pop_size
         # vaccinated population
         vaccinated_pop = self.pop_size * self.vacc_percentage
-        for person in range(vaccinated_pop):
+        for person in range(int(vaccinated_pop)):
             id = self.next_person_id + 1
-            person = person.Person(id, True, False)
+            person = Person(id, True, False)
             self.population.append(person)
         # # infected population
         # infected_pop = self.pop_size * self.initial_infected
@@ -95,9 +95,9 @@ class Simulation(object):
 
         # issue infected population makes everyone infected
         remain_pop = remain_pop - vaccinated_pop
-        for person in range(remain_pop):
+        for person in range(int(remain_pop)):
             id = self.next_person_id + 1
-            person = person.Person(id, False, True)
+            person = Person(id, False, True)
             self.population.append(person)
 
         total_to_infect = self.initial_infected
@@ -120,10 +120,13 @@ class Simulation(object):
 
         '''
         if self.current_infected == 0:
+            print('currentinfected')
             return False
         if self.pop_size == self.total_dead:
+            print('dead')
             return False
         if self.total_vaccinated == self.pop_size:
+            print('vaccpopsize')
             return False
         else:
             return True
@@ -139,6 +142,8 @@ class Simulation(object):
         # TODO: Keep track of the number of time steps that have passed.
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
+        self._create_population()
+
         time_step_counter = 0
         should_continue = self._simulation_should_continue()
 
@@ -147,6 +152,7 @@ class Simulation(object):
             # self.logger.log_continue(3)
             time_step_counter += 1
             should_continue = self._simulation_should_continue()
+            self.current_infected = 0
         print(f'The simulation has ended after {time_step_counter} turns.')
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
