@@ -297,8 +297,8 @@ class Simulation(object):
         self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
         self.total_vaccinated = 0
-        self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-            virus_name, pop_size, vacc_percentage, initial_infected)
+        # self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
+        #     virus_name, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
         self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name,
@@ -324,6 +324,7 @@ class Simulation(object):
         # the correct intial vaccination percentage and initial infected.
 
         remain_pop = self.pop_size
+        print("total population is " + str(remain_pop))
         # vaccinated population
         vaccinated_pop = self.pop_size * self.vacc_percentage
         for person in range(int(vaccinated_pop)):
@@ -351,6 +352,10 @@ class Simulation(object):
             self.next_person_id += 1
             person = Person(self.next_person_id, False)
             self.population.append(person)
+
+        print("vaccinated population is " + str(vaccinated_pop))
+        print("vaccinated population is " + str(vaccinated_pop))
+        print("heathly unvaccinated population is " + str(remain_pop))
 
         # total_to_infect = self.initial_infected
         # while total_to_infect > 0:
