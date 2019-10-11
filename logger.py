@@ -50,13 +50,13 @@ class Logger(object):
         '''
         log = ""
         if random_person_sick:
-            log += (f" {person._id} didn't infect {random_person._id} because already infected\n")
+            log = (f" {person._id} didn't infect {random_person._id} because already infected\n")
         elif random_person_vacc:
-            log += (f"{person._id} didn't infect {random_person._id} because vaccinated \n")
+            log = (f"{person._id} didn't infect {random_person._id} because vaccinated \n")
         elif did_infect is True:
-            log += (f"{person._id} infects {random_person._id} \n")
+            log = (f"{person._id} infects {random_person._id} \n")
         else:
-            log += (f"{person._id} didn't infect {random_person._id} \n")
+            log = (f"{person._id} didn't infect {random_person._id} \n")
 
         # TODO: Finish this method. Think about how the booleans passed (or not passed)
         # represent all the possible edge cases. Use the values passed along with each person,
@@ -79,9 +79,9 @@ class Logger(object):
         # should be False.  Otherwise, did_die_from_infection should be True.
         log = ""
         if did_die_from_infection is True:
-            log += (f"{person._id} died from infection \n")
+            log = (f"{person._id} died from infection \n")
         else:
-            log += (f"{person._id} survived infection \n")
+            log = (f"{person._id} survived infection \n")
 
         # Append the results of the infection to the logfile
         f = open(self.file_name, "a")
