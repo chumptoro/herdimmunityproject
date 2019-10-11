@@ -129,6 +129,8 @@ class Simulation(object):
         ''' This method should run the simulation until all requirements for ending
         the simulation are met.
         '''
+        Logger.write_metadata(self, self.pop_size, self.vacc_percentage, self.virus_name, self.mort_rate, self.repo_rate)
+        should_continue = self._simulation_should_continue()
         # TODO: Finish this method.  To simplify the logic here, use the helper method
         # _simulation_should_continue() to tell us whether or not we should continue
         # the simulation and run at least 1 more time_step.
@@ -140,10 +142,13 @@ class Simulation(object):
         should_continue = None
 
         while should_continue:
+            self.time_step()
+            self.logger.log_continue(3)
+            self.time_step_counter += 1
+            should_continue = self._simulation_should_continue()
+        print(f'The simulation has ended after {self.time_step_counter} turns.')
             # TODO: for every iteration of this loop, call self.time_step() to compute another
             # round of this simulation.
-        print('The simulation has ended after {time_step_counter} turns.'.format(
-            time_step_counter))
         pass
 
     def time_step(self):
@@ -176,7 +181,7 @@ class Simulation(object):
         interaction. It assumes that only living people are passed in as parameters.
 
         Args:
-            person1 (person): The initial infected person
+            person (person): The initial infected person
             random_person (person): The person that person1 interacts with.
         '''
         # Assert statements are included to make sure that only living people are passed
