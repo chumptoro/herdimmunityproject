@@ -435,15 +435,16 @@ class Simulation(object):
             random_person_vacc = False
 
             prob = random.random()
-            if prob > self.infected_person.infection.repro_rate:
+            if prob > person.infection.repro_rate:
                 did_infect = False
             else:
                 self.newly_infected.append(random_person._id)
                 did_infect = True
 
          # Call slogger method during this method.
-        self.logger.log_interaction(
-            person, random_person, random_person_sick, random_person_vacc, did_infect)
+        # self.logger.log_interaction(
+        # person, random_person, random_person_sick, random_person_vacc,
+        # did_infect)
 
         return did_infect
 

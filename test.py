@@ -50,3 +50,11 @@ def test_create_population():
     assert test_vaccinated == 500
     assert test_initial_infected == 50
     assert test_healthy_unvaccinated == 450
+
+
+def test_interaction():
+    skynet = Virus('Skynet', 0.8, 0.3)
+    person = Person(1, False, skynet)
+    infected_random_person = Person(1, False, skynet)
+    sim = Simulation(100, 0.5, skynet, 10)
+    assert sim.Interaction(person, infected_random_person) == False
