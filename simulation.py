@@ -104,7 +104,6 @@ class Simulation(object):
                 person_got.infection = self.virus
                 total_to_infect -= 1
 
-
         # randomly select a person from population
         # check to see if they are not vaccineated
         # set the amount infected
@@ -129,7 +128,8 @@ class Simulation(object):
         ''' This method should run the simulation until all requirements for ending
         the simulation are met.
         '''
-        Logger.write_metadata(self, self.pop_size, self.vacc_percentage, self.virus_name, self.mort_rate, self.repo_rate)
+        Logger.write_metadata(self, self.pop_size, self.vacc_percentage,
+                              self.virus_name, self.mort_rate, self.repo_rate)
         should_continue = self._simulation_should_continue()
         # TODO: Finish this method.  To simplify the logic here, use the helper method
         # _simulation_should_continugie() to tell us whether or not we should continue
@@ -147,8 +147,8 @@ class Simulation(object):
             self.time_step_counter += 1
             should_continue = self._simulation_should_continue()
         print(f'The simulation has ended after {self.time_step_counter} turns.')
-            # TODO: for every iteration of this loop, call self.time_step() to compute another
-            # round of this simulation.
+        # TODO: for every iteration of this loop, call self.time_step() to compute another
+        # round of this simulation.
         pass
 
     def time_step(self):
@@ -156,25 +156,21 @@ class Simulation(object):
         in the simulation.
 
         This includes:
-            1. 100 total interactions with a randon person for each infected person
+            1. 100 total interactions with a random person for each infected person
                 in the population
             2. If the person is dead, grab another random person from the population.
                 Since we don't interact with dead people, this does not count as an interaction.
             3. Otherwise call simulation.interaction(person, random_person) and
                 increment interaction counter by 1.
             '''
-        interactions = 0
+
         for person in range(self.population):
-            if person.infection == self.virus:
-
-                while ineteraction <= 100:
-                    if person.is_alive:
-                        random_person = random.choice(self.population)
-                        self.interaction(person, random_person)
-                        interactions += 1
-
-        # TODO: Finish this method.
-        pass
+            if person.infection == self.virus and person.is_alive == True:
+                interactions = 0
+                while interactions < 100:
+                    random_person = random.choice(self.population)
+                    self.interaction(person, random_person)
+                    interactions += 1
 
     def interaction(self, person, random_person):
         '''This method should be called any time two living people are selected for an
