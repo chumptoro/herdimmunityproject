@@ -40,7 +40,7 @@ class Simulation(object):
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
 
-        self.logger = None
+        self.logger = Logger('logs.txt')
         self.population = []  # List of Person objects
         self.pop_size = pop_size  # Int
         self.next_person_id = 0  # Int
@@ -169,7 +169,8 @@ class Simulation(object):
                 interactions = 0
                 while interactions < 100:
                     random_person = random.choice(self.population)
-                    self.interaction(person, random_person)
+                    if self.interaction(person, random_person) == True:
+                        random_person.infection = person.infection
                     interactions += 1
 
     def interaction(self, person, random_person):
@@ -196,11 +197,14 @@ class Simulation(object):
         if random_person.is_vaccinated == False and random_person.is_infected == None:
             prob = random.random()
             if prob > self.infected_person.infection.repro_rate:
-                return
+                return False
             else:
                 self.newly_infected.append(random_person._id)
+                return True
+        else:
+            return False
 
-         # TODO: Call slogger method during this method.
+         # Call slogger method during this method.
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
