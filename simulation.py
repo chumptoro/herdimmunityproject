@@ -324,52 +324,29 @@ class Simulation(object):
         # the correct intial vaccination percentage and initial infected.
 
         remain_pop = self.pop_size
-        print("total population is " + str(remain_pop))
+
         # vaccinated population
-        vaccinated_pop = self.pop_size * self.vacc_percentage
+        vaccinated_pop = int(self.pop_size * self.vacc_percentage)
         for person in range(int(vaccinated_pop)):
             self.next_person_id += 1
             person = Person(self.next_person_id, True)
             self.population.append(person)
 
-        # # infected population
-        # infected_pop = self.pop_size * self.initial_infected
-        # for person in range(infected_pop):
-        #     id = self.next_person_id + 1
-        #     person = person.Person(id, False, True)
-        #     self.population.append(person)
-        # healthy but unvaccinated population
-        #    - infected_pop
-
-        # infected population makes everyone infected
         for person in range(self.initial_infected):
             self.next_person_id += 1
             person = Person(self.next_person_id, False, self.virus)
             self.population.append(person)
 
-        remain_pop = self.pop_size - vaccinated_pop
+        remain_pop = int(self.pop_size - vaccinated_pop -
+                         self.initial_infected)
         for person in range(int(remain_pop)):
             self.next_person_id += 1
             person = Person(self.next_person_id, False)
             self.population.append(person)
 
-        print("vaccinated population is " + str(vaccinated_pop))
-        print("vaccinated population is " + str(vaccinated_pop))
-        print("heathly unvaccinated population is " + str(remain_pop))
-
-        # total_to_infect = self.initial_infected
-        # while total_to_infect > 0:
-        #     person_got = random.choice(self.population)
-        #     if person_got.is_vaccinated == False and person_got.infection == None:
-        #         person_got.infection = self.virus
-        #         total_to_infect -= 1
-        #         self.current_infected += 1
-
-        # randomly select a person from population
-        # check to see if they are not vaccineated
-        # set the amount infected
-        # do it as many times as initial infected
-        # check if they are not already infected
+        # print("initial infected population is " + str(self.initial_infected))
+        # print("vaccinated population is " + str(vaccinated_pop))
+        # print("heathly unvaccinated population is " + str(remain_pop))
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead

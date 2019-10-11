@@ -22,7 +22,7 @@ def test_create_population():
     for person in sim.population:
         if person.is_vaccinated == True:
             test_vaccinated += 1
-        elif person.infection == None:
+        elif person.infection != None:
             test_initial_infected += 1
         else:
             test_healthy_unvaccinated += 1
