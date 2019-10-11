@@ -40,11 +40,7 @@ class Simulation(object):
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
 
-<<<<<<< HEAD
         self.logger = Logger('log.txt')
-=======
-        self.logger = Logger('logs.txt')
->>>>>>> c329dfa669c53c0498964d003fe77370b199fb2d
         self.population = []  # List of Person objects
         self.pop_size = pop_size  # Int
         self.next_person_id = 0  # Int
@@ -110,6 +106,7 @@ class Simulation(object):
             if person_got.is_vaccinated == False and person_got.infection == None:
                 person_got.infection = self.virus
                 total_to_infect -= 1
+                self.current_infected += 1
 
         # randomly select a person from population
         # check to see if they are not vaccineated
@@ -135,9 +132,6 @@ class Simulation(object):
         ''' This method should run the simulation until all requirements for ending
         the simulation are met.
         '''
-        Logger.write_metadata(self, self.pop_size, self.vacc_percentage,
-                              self.virus.name, self.virus.mortality_rate, self.virus.repro_rate)
-        should_continue = self._simulation_should_continue()
         # TODO: Finish this method.  To simplify the logic here, use the helper method
         # _simulation_should_continugie() to tell us whether or not we should continue
         # the simulation and run at least 1 more time_step.
@@ -146,7 +140,7 @@ class Simulation(object):
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
         time_step_counter = 0
-        should_continue = True
+        should_continue = self._simulation_should_continue()
 
         while should_continue:
             self.time_step()
@@ -219,11 +213,11 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
-        self.newly_infected = []
         for person in self.newly_infected:
             for person.id in self.population:
-                person.infeced = True
-        pass
+                person.infection = virus
+                self.current_infected += 1
+        self.newly_infected = []
 
 
 if __name__ == "__main__":
