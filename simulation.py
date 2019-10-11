@@ -78,20 +78,22 @@ class Simulation(object):
         # the correct intial vaccination percentage and initial infected.
 
         remain_pop = self.pop_size
+
         # vaccinated population
         vaccinated_pop = self.pop_size * self.vacc_percentage
         for person in range(int(vaccinated_pop)):
             id = self.next_person_id + 1
             person = Person(id, True, False)
             self.population.append(person)
-        # # infected population
-        # infected_pop = self.pop_size * self.initial_infected
-        # for person in range(infected_pop):
-        #     id = self.next_person_id + 1
-        #     person = person.Person(id, False, True)
-        #     self.population.append(person)
-        # healthy but unvaccinated population
-        #    - infected_pop
+
+        # infected population
+        infected_pop = self.pop_size * self.initial_infected
+        for person in range(infected_pop):
+            id = self.next_person_id + 1
+            person = person.Person(id, False, True)
+            self.population.append(person)
+        healthy but unvaccinated population
+            - infected_pop
 
         # issue infected population makes everyone infected
         remain_pop = remain_pop - vaccinated_pop
@@ -241,21 +243,21 @@ class Simulation(object):
         self.newly_infected = []
 
 
-if __name__ == "__main__":
-    params = sys.argv[1:]
-    virus_name = str(params[0])
-    repro_rate = float(params[1])
-    mortality_rate = float(params[2])
+# if __name__ == "__main__":
+#     params = sys.argv[1:]
+#     virus_name = str(params[0])
+#     repro_rate = float(params[1])
+#     mortality_rate = float(params[2])
 
-    pop_size = int(params[3])
-    vacc_percentage = float(params[4])
+#     pop_size = int(params[3])
+#     vacc_percentage = float(params[4])
 
-    if len(params) == 6:
-        initial_infected = int(params[5])
-    else:
-        initial_infected = 1
+#     if len(params) == 6:
+#         initial_infected = int(params[5])
+#     else:
+#         initial_infected = 1
 
-    virus = Virus(virus_name, repro_rate, mortality_rate)
-    sim = Simulation(pop_size, vacc_percentage, virus, initial_infected)
+#     virus = Virus(virus_name, repro_rate, mortality_rate)
+#     sim = Simulation(pop_size, vacc_percentage, virus, initial_infected)
 
-    sim.run()
+#     sim.run()
