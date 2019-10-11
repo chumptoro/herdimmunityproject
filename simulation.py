@@ -179,6 +179,7 @@ class Simulation(object):
                     if self.interaction(person, random_person) == True:
                         random_person.infection = person.infection
                     interactions += 1
+                self._infect_newly_infected()
 
     def interaction(self, person, random_person):
         '''This method should be called any time two living people are selected for an
@@ -231,10 +232,12 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
-        for person in self.newly_infected:
-            for person.id in self.population:
-                person.infection = virus
+        for infected_id in self.newly_infected:
+            for person in self.population:
+                if person._id == infected_id
+                person.infection = self.virus
                 self.current_infected += 1
+                self.total_infected += 1
         self.newly_infected = []
 
 
