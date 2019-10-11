@@ -29,3 +29,24 @@ def test_create_population():
     assert test_vaccinated == 50
     assert test_initial_infected == 10
     assert test_healthy_unvaccinated == 40
+
+    raza_ghul = Virus('Raza Ghul', 0.2, 0.7)
+    sim = Simulation(1000, 0.5, raza_ghul, 50)
+    sim._create_population()
+    assert sim.pop_size == 1000
+    assert sim.vacc_percentage == 0.5
+    assert sim.initial_infected == 50
+
+    test_initial_infected = 0
+    test_vaccinated = 0
+    test_healthy_unvaccinated = 0
+    for person in sim.population:
+        if person.is_vaccinated == True:
+            test_vaccinated += 1
+        elif person.infection != None:
+            test_initial_infected += 1
+        else:
+            test_healthy_unvaccinated += 1
+    assert test_vaccinated == 500
+    assert test_initial_infected == 50
+    assert test_healthy_unvaccinated == 450

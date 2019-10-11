@@ -297,8 +297,8 @@ class Simulation(object):
         self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
         self.total_vaccinated = 0
-        # self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-        #     virus_name, pop_size, vacc_percentage, initial_infected)
+        self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
+            self.virus.name, self.pop_size, self.vacc_percentage, self.initial_infected)
         self.newly_infected = []
 
         self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name,
@@ -314,7 +314,7 @@ class Simulation(object):
                 list: A list of Person objects.
 
         '''
-        # TODO: Finish this method! This method should be called when the simulation
+        # This method is called when the simulation
         # begins, to create the population that will be used. This method should return
         # an array filled with Person objects that matches the specifications of the
         # simulation (correct number of people in the population, correct percentage of
