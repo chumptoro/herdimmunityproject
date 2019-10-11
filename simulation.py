@@ -81,8 +81,8 @@ class Simulation(object):
         # vaccinated population
         vaccinated_pop = self.pop_size * self.vacc_percentage
         for person in range(int(vaccinated_pop)):
-            id = self.next_person_id + 1
-            person = Person(id, True, False)
+            self.next_person_id += 1
+            person = Person(self.next_person_id, True)
             self.population.append(person)
         # # infected population
         # infected_pop = self.pop_size * self.initial_infected
@@ -94,19 +94,29 @@ class Simulation(object):
         #    - infected_pop
 
         # issue infected population makes everyone infected
-        remain_pop = remain_pop - vaccinated_pop
-        for person in range(int(remain_pop)):
-            id = self.next_person_id + 1
-            person = Person(id, False, True)
+
+        for person in range(self.initial_infected):
+            self.next_person_id += 1
+            person = Person(self.next_person_id, False, self.virus)
             self.population.append(person)
 
-        total_to_infect = self.initial_infected
-        while total_to_infect != 0:
-            person_got = random.choice(self.population)
-            if person_got.is_vaccinated == False and person_got.infection == None:
-                person_got.infection = self.virus
-                total_to_infect -= 1
-                self.current_infected += 1
+        remain_pop = self.pop_size - len(self.population)
+        for person in range(int(remain_pop)):
+            self.next_person_id += 1
+            person = Person(self.next_person_id, False)
+            self.population.append(person)
+        for person in self.population:
+            print(person.is_vaccinated)
+        print(self.population)
+
+        # total_to_infect = self.initial_infected
+        # while total_to_infect > 0:
+        #     person_got = random.choice(self.population)
+        #     if person_got.is_vaccinated == False and person_got.infection == None:
+        #         person_got.infection = self.virus
+        #         total_to_infect -= 1
+        #         self.current_infected += 1
+
 
         # randomly select a person from population
         # check to see if they are not vaccineated
@@ -221,9 +231,9 @@ class Simulation(object):
                 did_infect = True
 
          # Call slogger method during this method.
-         self.logger.log_interaction(person, random_person, random_person_sick, random_person_vacc, did_infect)
+        self.logger.log_interaction(person, random_person, random_person_sick, random_person_vacc, did_infect)
 
-         return did_infect
+        return did_infect
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
