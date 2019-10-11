@@ -132,7 +132,7 @@ class Simulation(object):
         Logger.write_metadata(self, self.pop_size, self.vacc_percentage, self.virus_name, self.mort_rate, self.repo_rate)
         should_continue = self._simulation_should_continue()
         # TODO: Finish this method.  To simplify the logic here, use the helper method
-        # _simulation_should_continue() to tell us whether or not we should continue
+        # _simulation_should_continugie() to tell us whether or not we should continue
         # the simulation and run at least 1 more time_step.
 
         # TODO: Keep track of the number of time steps that have passed.
@@ -212,6 +212,10 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
+        self.newly_infected = []
+        for person in self.newly_infected:
+            for person.id in self.population:
+                person.infeced = True
         pass
 
 
