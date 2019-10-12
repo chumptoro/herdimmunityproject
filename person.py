@@ -30,10 +30,13 @@ class Person(object):
         x = random.random()
         if x < self.infection.mortality_rate:
             self.is_alive = False
+            print("person with id " + str(self._id) + " died from infection")
             return False
         else:
             self.infection = None
             self.is_vaccinated = True
+            print("person with id " + str(self._id) +
+                  " survived from infection and is no vaccinated")
             return True
 
 

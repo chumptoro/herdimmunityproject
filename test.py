@@ -94,8 +94,19 @@ def test_interaction():
 
 
 def test_time_step():
-    skynet = Virus('Skynet', 0.1, 0.8)
-    sim = Simulation(2, 0.2, skynet, 1)
+    # scenario: infection is certain and death is certain
+    # possible bug: 1 person who is infected is left
+    # skynet = Virus('Skynet', 1, 1)
+    # sim = Simulation(2, 0.2, skynet, 1)
+    # sim.run()
+
+    # infection is certain, but no death
+    # skynet = Virus('Skynet', 1, 0.0)
+    # sim = Simulation(2, 0.2, skynet, 1)
+    # sim.run()
+
+    skynet = Virus('Skynet', 1, 0.0)
+    sim = Simulation(10, 0.2, skynet, 1)
     sim.run()
 
 test_time_step()

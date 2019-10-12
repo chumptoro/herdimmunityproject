@@ -1,5 +1,9 @@
 pop	vacc %	virus	mort rate	repro_num
-2	0.2	Skynet	0.8		0.1	
-0 didn't infect 1 
+2	0.2	Skynet	0.0		1	
+0 infects 1 
 
-0 died from infection 
+0 survived infection 
+
+1 didn't infect 0 because vaccinated 
+
+1 survived infection 
