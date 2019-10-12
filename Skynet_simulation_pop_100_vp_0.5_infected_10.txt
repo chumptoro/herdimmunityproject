@@ -1,2 +1,0 @@
-pop	vacc %	virus	mort rate	repro_num
-100	0.5	Skynet	0.3		0.8	

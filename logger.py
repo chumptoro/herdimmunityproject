@@ -65,7 +65,7 @@ class Logger(object):
         # exactly what happened in the interaction and create a String, and
         # write to your logfile.
 
-        f = open('log.txt', "a")
+        f = open(self.file_name, "a")
         f.write(log)
         f.close()
 
