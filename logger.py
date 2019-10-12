@@ -21,14 +21,15 @@ class Logger(object):
         # it should create the text file that we will store all logs in.
         # TIP: Use 'w' mode when you open the file. For all other methods, use
         f = open(self.file_name, "w")
+        f.write("pop\tvacc %\tvirus\tmort rate\trepro_num\n")
 
         # Create row of data
         row_data = ""
-        row_data = f"{pop_size} \t"
-        row_data += f"{vacc_percentage} \t"
-        row_data += f"{virus_name}  \t"
-        row_data += f"{mortality_rate}  \t"
-        row_data += f"{basic_repro_num}  \t"
+        row_data = f"{pop_size}\t"
+        row_data += f"{vacc_percentage}\t"
+        row_data += f"{virus_name}\t"
+        row_data += f"{mortality_rate}\t\t"
+        row_data += f"{basic_repro_num}\t"
 
         # row of data to metadata
         f.write(row_data)
@@ -50,13 +51,13 @@ class Logger(object):
         '''
         log = ""
         if random_person_sick:
-            log = (f" {person._id} didn't infect {random_person._id} because already infected\n")
+            log = (f"\n{person._id} didn't infect {random_person._id} because already infected\n")
         elif random_person_vacc:
-            log = (f"{person._id} didn't infect {random_person._id} because vaccinated \n")
+            log = (f"\n{person._id} didn't infect {random_person._id} because vaccinated \n")
         elif did_infect is True:
-            log = (f"{person._id} infects {random_person._id} \n")
+            log = (f"\n{person._id} infects {random_person._id} \n")
         else:
-            log = (f"{person._id} didn't infect {random_person._id} \n")
+            log = (f"\n{person._id} didn't infect {random_person._id} \n")
 
         # TODO: Finish this method. Think about how the booleans passed (or not passed)
         # represent all the possible edge cases. Use the values passed along with each person,
@@ -64,7 +65,7 @@ class Logger(object):
         # exactly what happened in the interaction and create a String, and
         # write to your logfile.
 
-        f = open(log.txt, "a")
+        f = open('log.txt', "a")
         f.write(log)
         f.close()
 
@@ -79,9 +80,9 @@ class Logger(object):
         # should be False.  Otherwise, did_die_from_infection should be True.
         log = ""
         if did_die_from_infection is True:
-            log = (f"{person._id} died from infection \n")
+            log = (f"\n{person._id} died from infection \n")
         else:
-            log = (f"{person._id} survived infection \n")
+            log = (f"\n{person._id} survived infection \n")
 
         # Append the results of the infection to the logfile
         f = open(self.file_name, "a")

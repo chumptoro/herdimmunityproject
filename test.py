@@ -73,7 +73,7 @@ def test_interaction():
     healthy_random_person = Person(4, False)
     assert sim.interaction(person, healthy_random_person, .79) == True
 
-# test_interaction()
+test_interaction()
 
 
 def test_simulation_should_continue():
@@ -87,6 +87,14 @@ def test_simulation_should_continue():
     sim.total_dead = 1
     assert sim._simulation_should_continue() == False
 
+
+def test_time_step():
+    skynet = Virus('Skynet', 0.8, 0.3)
+    sim = Simulation(100, 0.5, skynet, 10)
+    sim.time_step()
+
+
+# def test_run():
 
 # test_simulation_should_continue()
 
