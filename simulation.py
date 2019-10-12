@@ -1,6 +1,7 @@
 import random
 import sys
-random.seed(42)
+import time
+random.seed(time.process_time())
 from person import Person
 from logger import Logger
 from virus import Virus
@@ -125,6 +126,7 @@ class Simulation(object):
         remain_pop = self.pop_size
 
         # vaccinated population
+        # number is rounded down.  .06 = 0
         vaccinated_pop = int(self.pop_size * self.vacc_percentage)
         for i in range(int(vaccinated_pop)):
             self.next_person_id += 1
@@ -145,7 +147,6 @@ class Simulation(object):
         for i in range(int(remain_pop)):
             self.next_person_id += 1
             person = Person(self.next_person_id, False, None)
-            assert person.infection == None
             self.population.append(person)
             # print("hi my id is " + str(person._id) +
             #       " and i'm healthy but not vaccinated ")
@@ -176,9 +177,10 @@ class Simulation(object):
         for person in self.population:
             if person.infection != None and person.is_alive == True:
                 print("person with id " + str(person._id) +
-                      " is infected, so let's have him infected people")
+                      " and my infection virus is " + str(person.infection))
+
                 interactions = 0
-                while interactions < 10:
+                while interactions < 2:
                     random_person = random.choice(self.population)
                     if random_person.is_alive == False:
                         continue
@@ -198,8 +200,7 @@ class Simulation(object):
                     self.logger.log_infection_survival(person, True)
             else:
                 print("person with id " + str(person._id) +
-                      "  is not infected let's move on")
-
+                      " and my infection virus is " + str(person.infection))
         # update list of people who are infected
         self._infect_newly_infected()
 
@@ -246,6 +247,7 @@ class Simulation(object):
             random_person_sick = False
             if prob == None:
                 real_prob = random.random()
+                # print("rate is" + str(real_prob))
             else:
                 real_prob = prob
             # print(" real prob rate is " + str(real_prob) +

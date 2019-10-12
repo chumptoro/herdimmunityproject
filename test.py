@@ -52,10 +52,10 @@ from simulation import Simulation
 #     assert test_healthy_unvaccinated == 450
 
 
-# def test_interaction():
-#     skynet = Virus('Skynet', 0.8, 0.3)
-#     person = Person(1, False, skynet)
-#     sim = Simulation(100, 0.5, skynet, 10)
+def test_interaction():
+    skynet = Virus('Skynet', 0.8, 0.3)
+    person = Person(1, False, skynet)
+    sim = Simulation(3, 0.2, skynet, 2)
 
 #     # random person is sick
 #     infected_random_person = Person(1, False, skynet)
@@ -94,8 +94,8 @@ from simulation import Simulation
 
 
 def test_time_step():
-    skynet = Virus('Skynet', 0.8, 0.8)
-    sim = Simulation(10, 0.2, skynet, 2)
+    skynet = Virus('Skynet', 0.1, 0.8)
+    sim = Simulation(2, 0.2, skynet, 1)
     sim.time_step()
 
 test_time_step()
