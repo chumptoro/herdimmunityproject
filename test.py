@@ -55,6 +55,22 @@ def test_create_population():
 def test_interaction():
     skynet = Virus('Skynet', 0.8, 0.3)
     person = Person(1, False, skynet)
-    infected_random_person = Person(1, False, skynet)
     sim = Simulation(100, 0.5, skynet, 10)
-    assert sim.Interaction(person, infected_random_person) == False
+
+    # random person is sick
+    infected_random_person = Person(1, False, skynet)
+    sim.interaction(person, infected_random_person) == False
+
+    # random person is vaccinated
+    vacced_random_person = Person(1, False, skynet)
+    sim.interaction(person, vacced_random_person) == False
+
+    # healthy random person does not get infected
+    healthy_random_person = Person(1, False, skynet)
+    sim.interaction(person, healthy_random_person, .81) == False
+
+    # healthy random person does get infected
+    healthy_random_person = Person(1, False, skynet)
+    sim.interaction(person, healthy_random_person, .79) == True
+
+test_interaction()

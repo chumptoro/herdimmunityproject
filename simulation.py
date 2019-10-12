@@ -401,7 +401,7 @@ class Simulation(object):
                         random_person.infection = person.infection
                     interactions += 1
 
-    def interaction(self, person, random_person):
+    def interaction(self, person, random_person, prob=None):
         '''This method should be called any time two living people are selected for an
         interaction. It assumes that only living people are passed in as parameters.
 
@@ -425,18 +425,26 @@ class Simulation(object):
         random_person_vacc = None
         did_infect = False
 
-        if random_person.is_infected != None:
+        if random_person.infection != None:
             random_person_sick = True
+            print("case 1")
 
         elif random_person.is_vaccinated == True:
             random_person_vacc = True
+            print("case 2")
 
         else:
+            print("case 3")
             random_person_vacc = False
-
-            prob = random.random()
-            if prob > person.infection.repro_rate:
+            if prob == None:
+                real_prob = random.random()
+            else:
+                real_prob = prob
+            print(" real prob rate is " + str(real_prob) +
+                  " rep rate is " + str(person.infection.repro_rate))
+            if real_prob > person.infection.repro_rate:
                 did_infect = False
+                print("random healthy person does not infected becau")
             else:
                 self.newly_infected.append(random_person._id)
                 did_infect = True
