@@ -96,7 +96,7 @@ def test_interaction():
 def test_time_step():
     skynet = Virus('Skynet', 0.1, 0.8)
     sim = Simulation(2, 0.2, skynet, 1)
-    sim.time_step()
+    sim.run()
 
 test_time_step()
 

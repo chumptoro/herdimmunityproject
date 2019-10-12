@@ -78,11 +78,12 @@ class Simulation(object):
         self._create_population()
         print("population is " + str(self.pop_size))
         time_step_counter = 0
-
-        while self._simulation_should_continue():
+        stop = 0
+        while self._simulation_should_continue() and stop < 5:
             self.time_step()
             # self.logger.log_continue(3)
             time_step_counter += 1
+            stop += 1
 
         print(f'The simulation has ended after {time_step_counter} turns.')
         # TODO: for every iteration of this loop, call self.time_step() to compute another
@@ -172,7 +173,7 @@ class Simulation(object):
                 increment interaction counter by 1.
             '''
         # for testing only
-        self._create_population()
+        # self._create_population()
 
         for person in self.population:
             if person.infection != None and person.is_alive == True:
@@ -180,15 +181,23 @@ class Simulation(object):
                       " and my infection virus is " + str(person.infection))
 
                 interactions = 0
-                while interactions < 2:
+                while interactions < 1:
                     random_person = random.choice(self.population)
-                    if random_person.is_alive == False:
+                    if random_person.is_alive == False or random_person._id == person._id:
                         continue
                     else:
+                        print("this is interaction number " + str(interactions))
                         if self.interaction(person, random_person) == True:
                             random_person.infection = person.infection
                             self.newly_infected.append(random_person._id)
+                            print("person with id " + str(person._id) +
+                                  " infects person with id " + str(random_person._id))
+                        else:
+                            random_person.infection = None
+                            print("person with id " + str(person._id) +
+                                  " did NOT infect person with id " + str(random_person._id))
                         interactions += 1
+
                 # update whether the person who's doing the infecting lives and
                 # dies.  If alive, they become vaccinated
                 person_alive = person.did_survive_infection()
@@ -247,7 +256,7 @@ class Simulation(object):
             random_person_sick = False
             if prob == None:
                 real_prob = random.random()
-                # print("rate is" + str(real_prob))
+                print("rate is" + str(real_prob))
             else:
                 real_prob = prob
             # print(" real prob rate is " + str(real_prob) +
