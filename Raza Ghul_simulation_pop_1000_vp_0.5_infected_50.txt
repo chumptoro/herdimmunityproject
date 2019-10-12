@@ -1,0 +1,2 @@
+pop	vacc %	virus	mort rate	repro_num
+1000	0.5	Raza Ghul	0.7		0.2	

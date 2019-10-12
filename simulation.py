@@ -40,7 +40,6 @@ class Simulation(object):
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
 
-        self.logger = Logger('log.txt')
         self.population = []  # List of Person objects
         self.pop_size = pop_size  # Int
         self.next_person_id = 0  # Int
@@ -51,9 +50,15 @@ class Simulation(object):
         self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
         self.total_vaccinated = 0
+
+        self.newly_infected = []
+
+        self.vaccinated = []
+
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             self.virus.name, self.pop_size, self.vacc_percentage, self.initial_infected)
-        self.newly_infected = []
+
+        self.logger = Logger(self.file_name)
 
         self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name,
                                    self.virus.mortality_rate, self.virus.repro_rate)
@@ -83,8 +88,10 @@ class Simulation(object):
         vaccinated_pop = int(self.pop_size * self.vacc_percentage)
         for person in range(int(vaccinated_pop)):
             self.next_person_id += 1
+            self.vaccinated.append(self.next_person_id)
             person = Person(self.next_person_id, True)
             self.population.append(person)
+        self.total_vaccinated = len(self.vaccinated)
 
         for person in range(self.initial_infected):
             self.next_person_id += 1
@@ -107,7 +114,13 @@ class Simulation(object):
         or everyone is vaccinated.
 
         '''
-        return (self.current_infected == 0 and self.pop_size == self.total_dead)
+        if self.current_infected == 0:
+            return False
+        if self.pop_size == self.total_dead:
+            return False
+        if self.total_vaccinated == self.pop_size:
+            return False
+        return True
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
@@ -148,10 +161,28 @@ class Simulation(object):
 
         for person in self.population:
             if person.infection == self.virus and person.is_alive == True:
-                for i in range(100):
+                interactions = 0
+                while interactions < 100:
                     random_person = random.choice(self.population)
-                    if self.interaction(person, random_person) == True:
-                        random_person.infection = person.infection
+                    if random_person.is_alive == False:
+                        continue
+                    else:
+                        if self.interaction(person, random_person) == True:
+                            random_person.infection = person.infection
+                            self.newly_infected.append(random_person._id)
+                        interactions += 1
+                person_alive = person.did_survive_infection()
+                if person_alive == True:
+                    total_vaccinated += 1
+                else:
+                    total_dead += 1
+
+        # update list of people who are infected
+        self._infect_newly_infected()
+        # update whetherthe person who's doing the infecting lives and dies
+        self
+
+        # after each interaction, self.total_vaccinated
 
     def interaction(self, person, random_person, prob=None):
         '''This method should be called any time two living people are selected for an
@@ -204,7 +235,7 @@ class Simulation(object):
                 did_infect = False
                 # print("random healthy person does not infected due to good luck")
             else:
-                self.newly_infected.append(random_person._id)
+                # self.newly_infected.append(random_person._id)
                 did_infect = True
 
          # Call slogger method during this method.

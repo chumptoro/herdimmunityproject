@@ -1,0 +1,40 @@
+
+1 didn't infect 1 because already infected
+
+1 didn't infect 2 because vaccinated 
+
+1 didn't infect 3 
+
+1 infects 4 
+
+1 didn't infect 1 because already infected
+
+1 didn't infect 2 because vaccinated 
+
+1 didn't infect 3 
+
+1 infects 4 
+
+1 didn't infect 1 because already infected
+
+1 didn't infect 2 because vaccinated 
+
+1 didn't infect 3 
+
+1 infects 4 
+
+1 didn't infect 1 because already infected
+
+1 didn't infect 2 because vaccinated 
+
+1 didn't infect 3 
+
+1 infects 4 
+
+1 didn't infect 1 because already infected
+
+1 didn't infect 2 because vaccinated 
+
+1 didn't infect 3 
+
+1 infects 4 

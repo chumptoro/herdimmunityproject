@@ -73,19 +73,24 @@ def test_interaction():
     healthy_random_person = Person(4, False)
     assert sim.interaction(person, healthy_random_person, .79) == True
 
-test_interaction()
+# test_interaction()
 
 
 def test_simulation_should_continue():
     skynet = Virus('Skynet', 0.8, 0.3)
     sim = Simulation(100, 0.5, skynet, 10)
     sim.current_infected = 0
-    sim.pop_size = 0
-    sim.total_dead = 0
-    assert sim._simulation_should_continue() == True
-    sim.pop_size = 10
-    sim.total_dead = 1
     assert sim._simulation_should_continue() == False
+
+    sim1 = Simulation(100, 0.5, skynet, 10)
+    sim1.pop_size = 0
+    sim1.total_dead = 0
+    assert sim1._simulation_should_continue() == False
+
+    sim2 = Simulation(100, 0.5, skynet, 10)
+    sim2.pop_size = 10
+    sim2.total_dead = 1
+    assert sim._simulation_should_continue() == True
 
 
 def test_time_step():
