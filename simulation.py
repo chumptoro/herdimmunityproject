@@ -424,27 +424,30 @@ class Simulation(object):
         random_person_sick = None
         random_person_vacc = None
         did_infect = False
+        case = 3
 
         if random_person.infection != None:
             random_person_sick = True
             print("case 1")
+            case = 1
 
-        elif random_person.is_vaccinated == True:
+        if random_person.is_vaccinated == True:
             random_person_vacc = True
             print("case 2")
+            case = 2
 
-        else:
+        if case == 3:
             print("case 3")
             random_person_vacc = False
             if prob == None:
                 real_prob = random.random()
             else:
                 real_prob = prob
-            print(" real prob rate is " + str(real_prob) +
-                  " rep rate is " + str(person.infection.repro_rate))
+            # print(" real prob rate is " + str(real_prob) +
+            #       " rep rate is " + str(person.infection.repro_rate))
             if real_prob > person.infection.repro_rate:
                 did_infect = False
-                print("random healthy person does not infected becau")
+                # print("random healthy person does not infected due to good luck")
             else:
                 self.newly_infected.append(random_person._id)
                 did_infect = True

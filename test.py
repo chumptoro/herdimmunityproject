@@ -59,18 +59,35 @@ def test_interaction():
 
     # random person is sick
     infected_random_person = Person(1, False, skynet)
-    sim.interaction(person, infected_random_person) == False
+    assert sim.interaction(person, infected_random_person) == False
 
     # random person is vaccinated
-    vacced_random_person = Person(1, False, skynet)
-    sim.interaction(person, vacced_random_person) == False
+    vacced_random_person = Person(2, True, skynet)
+    assert sim.interaction(person, vacced_random_person) == False
 
     # healthy random person does not get infected
-    healthy_random_person = Person(1, False, skynet)
-    sim.interaction(person, healthy_random_person, .81) == False
+    healthy_random_person = Person(3, False)
+    assert sim.interaction(person, healthy_random_person, .81) == False
 
     # healthy random person does get infected
-    healthy_random_person = Person(1, False, skynet)
-    sim.interaction(person, healthy_random_person, .79) == True
+    healthy_random_person = Person(4, False)
+    assert sim.interaction(person, healthy_random_person, .79) == True
 
-test_interaction()
+# test_interaction()
+
+
+def test_simulation_should_continue():
+    skynet = Virus('Skynet', 0.8, 0.3)
+    sim = Simulation(100, 0.5, skynet, 10)
+    sim.current_infected = 0
+    sim.pop_size = 0
+    sim.total_dead = 0
+    assert sim._simulation_should_continue() == True
+    sim.pop_size = 10
+    sim.total_dead = 1
+    assert sim._simulation_should_continue() == False
+
+
+# test_simulation_should_continue()
+
+# def test_infect_newly_infected():
